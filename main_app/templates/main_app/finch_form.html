@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{% if object %}Edit{% else %}Add{% endif %} Finch</h1>
+<h2>Edit Finch</h2>
   <form action="" method="POST">
     {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit!" class="btn">
+    {{ form.as_table }}
+    <button type="submit">Save changes</button>
   </form>
+    {% if finch %}
+        <a href="{% url 'finches_detail' finch_id=finch.id %}">Cancel</a>
+    {% else %}
+        <a href="{% url 'finches_index' %}">Cancel</a>
+{% endif %}
 {% endblock %}

@@ -9,4 +9,24 @@
       <p>Age: {{ finch.age }}</p>
     </div>
   </div>
+
+  <a href="{% url 'finches_edit' pk=finch.id %}">Edit</a>
+  <a href="{% url 'finches_delete' pk=finch.id %}">Delete</a>
+
+  <h2>Feedings</h2>
+  <ul>
+    {% for feeding in feedings %}
+      <li>{{ feeding.date }} - {{ feeding.meal }}</li>
+    {% empty %}
+      <li>No feedings yet.</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Add Feeding</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Feeding</button>
+  </form>
+
 {% endblock %}
