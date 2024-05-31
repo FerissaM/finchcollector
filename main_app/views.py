@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .models import Finch
 
 # Create your views here.
@@ -20,3 +22,17 @@ def finches_index(request):
 def finches_detail(request, finch_id):
     finch = Finch.objects.get(id=finch_id)
     return render(request, 'finches/detail.html', {'finch': finch})
+
+class FinchCreate(CreateView):
+    model = Finch
+    fields = '__all__'
+    success_url = reverse_lazy('finches_index')
+
+class FinchUpdate(UpdateView):
+    model = Finch
+    fields = ['species', 'description', 'age']
+    success_url = reverse_lazy('finches_index')
+
+class FinchDelete(DeleteView):
+    model = Finch
+    success_url = reverse_lazy('finches_index')
