@@ -22,3 +22,10 @@ class Feeding(models.Model):
 
     def __str__(self):
         return f"{self.date} - {self.finch.name} fed {self.meal}"
+    
+class Toy(models.Model):
+    name = models.CharField(max_length=100)
+    finches = models.ManyToManyField(Finch, related_name='toys')
+
+    def __str__(self):
+        return self.name

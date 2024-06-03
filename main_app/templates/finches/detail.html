@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Finch Details</h1>
+<h2>{{ finch.name }}</h2>
   <div class="card">
     <div class="card-content">
       <span class="card-title">{{ finch.name }}</span>
@@ -22,11 +22,29 @@
     {% endfor %}
   </ul>
 
-  <h2>Add Feeding</h2>
+  <h3>Add Feeding</h3>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Add Feeding</button>
   </form>
 
+  <h2>Toys</h2>
+  <h3>List of Toys:</h3>
+  <ul>
+    {% for toy in finch.toys.all %}
+      <li>{{ toy.name }}</li>
+    {% endfor %}
+  </ul>
+
+  <form method="post" action="{% url 'add_toy_to_finch' finch_id=finch.id %}">
+    {% csrf_token %}
+    <select name="toy">
+      {% for toy in available_toys %}
+        <option value="{{ toy.id }}">{{ toy.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Add Toy</button>
+  </form>
+  
 {% endblock %}
